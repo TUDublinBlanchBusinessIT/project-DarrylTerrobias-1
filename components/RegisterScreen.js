@@ -1,8 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
 import appStyles from '../assets/appStyles';
-import { db } from '../firebaseConfig'; 
-
+import { firebase } from '../firebaseConfig';  // Import Firebase
 
 export function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -15,29 +14,34 @@ export function RegistrationScreen({ navigation }) {
     }
 
     try {
+      await firebase.auth().createUserWithEmailAndPassword(email, password);
+      Alert.alert('Success', 'You have successfully registered! Please log in.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.navigate('Login');  
+          }
+      
+        }
+      ]);
+    } catch (error) {
+      Alert.alert('Error', `Failed to register: ${error.message}`);
+    }
+  };
+
+
+/*
+
+// The database was working but using firebase auth to enable the user to register and login, i have to remove db collection 
+  but i will fix it later
+   try {
       // Store email and password in Firestore as plain strings
       await db.collection('users').add({
         email: email,
         password: password, 
       });
 
-  
-      // Show success alert and tells user that it worked and to go back to the login screen to login
-      Alert.alert('Success', 'You have successfully registered! \n Go back to login screen', [
-        {
-          text: 'OK',
-          onPress: () => {
-            // Navigate to the Login screen after the alert is dismissed
-            navigation.navigate('LoginScreen');
-          }
-        }
-      ]);
-
-  
-    } catch (error) {
-      Alert.alert('Error', `Failed to register: ${error.message}`);
-    }
-  };
+*/
 
   return (
     <View style={appStyles.container}>

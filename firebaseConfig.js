@@ -1,7 +1,8 @@
 import firebase from "firebase";
+import 'firebase/auth'; // Ensure authentication is imported
+import 'firebase/firestore'; // Ensure Firestore is imported
 
-
-// Your web app's Firebase configuration
+// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAIxcISoqB9BO-qMAQpSdJ9UpNucuc5qlA",
   authDomain: "pc-building-app-8d816.firebaseapp.com",
@@ -13,16 +14,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+
 let app;
 
-if(!firebase.apps.length){
-  alert("initialising");
-  app = firebase.initializeApp(firebaseConfig);
-}
-else {
-  alert("app length " + firebase.apps.length)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // Avoid re-initializing if already initialized
 }
 
+// Correctly reference Firestore
 const db = firebase.firestore();
 
-export {db};
+export { firebase, db };

@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import appStyles from '../assets/appStyles';
+import { firebase } from '../firebaseConfig'; // Import Firebase
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    //console.log('Login pressed:', { email, password });
-    alert(`'Login pressed: ${email}, password: ${password}`);
+  const handleLogin = async () => {
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      // Navigate to the MenuScreen after successful login
+      navigation.replace('Menu');
+    } catch (error) {
+      Alert.alert('Error', `Failed to login: ${error.message}`);
+    }
   };
 
   return (
