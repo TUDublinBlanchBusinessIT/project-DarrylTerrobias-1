@@ -1,8 +1,8 @@
 import firebase from "firebase";
-import 'firebase/auth'; // Ensure authentication is imported
-import 'firebase/firestore'; // Ensure Firestore is imported
+import "firebase/auth";
+import "firebase/firestore";
 
-// Your Firebase config
+
 const firebaseConfig = {
   apiKey: "AIzaSyAIxcISoqB9BO-qMAQpSdJ9UpNucuc5qlA",
   authDomain: "pc-building-app-8d816.firebaseapp.com",
@@ -25,5 +25,6 @@ if (!firebase.apps.length) {
 
 // Correctly reference Firestore
 const db = firebase.firestore();
+const auth = firebase.auth();
 
-export { firebase, db };
+export { firebase, db, auth};

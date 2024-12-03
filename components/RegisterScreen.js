@@ -1,11 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
 import appStyles from '../assets/appStyles';
-import { firebase } from '../firebaseConfig';  // Import Firebase
+import { firebase, db } from '../firebaseConfig'; // Import Firestore and Firebase
 
 export function RegistrationScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(''); // State for email input
+  const [password, setPassword] = useState(''); // State for password input
 
   const handleRegister = async () => {
     if (email === '' || password === '') {
@@ -14,34 +14,25 @@ export function RegistrationScreen({ navigation }) {
     }
 
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
+      // Firebase Authentication
+      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+      // Save user data in Firestore 
+      await db.collection('users').add({ // Added Firestore integration
+        email: email, // Storing email
+        password: password, 
+      });
+
       Alert.alert('Success', 'You have successfully registered! Please log in.', [
         {
           text: 'OK',
-          onPress: () => {
-            navigation.navigate('Login');  
-          }
-      
+          onPress: () => navigation.navigate('Login'), // Brings you back to the login screen
         }
       ]);
     } catch (error) {
       Alert.alert('Error', `Failed to register: ${error.message}`);
     }
   };
-
-
-/*
-
-// The database was working but using firebase auth to enable the user to register and login, i have to remove db collection 
-  but i will fix it later
-   try {
-      // Store email and password in Firestore as plain strings
-      await db.collection('users').add({
-        email: email,
-        password: password, 
-      });
-
-*/
 
   return (
     <View style={appStyles.container}>
@@ -52,13 +43,13 @@ export function RegistrationScreen({ navigation }) {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
+        keyboardType="email-address" // Added to handle email input properly
       />
 
       <TextInput
         style={appStyles.input}
         placeholder="Password"
-        secureTextEntry
+        secureTextEntry // Makes the input secure for passwords
         value={password}
         onChangeText={setPassword}
       />
