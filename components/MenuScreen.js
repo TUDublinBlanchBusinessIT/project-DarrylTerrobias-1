@@ -1,9 +1,54 @@
 import React, { useState } from 'react';
-import { View, Text, Picker, Button, TouchableOpacity, } from 'react-native';
-import appStyles2 from '../assets/appStyles2'; 
+import { View, Text, TouchableOpacity, Modal, FlatList } from 'react-native';
+import appStyles2 from '../assets/appStyles2';
+
+// CustomPicker component
+const CustomPicker = ({ label, options, selectedValue, onValueChange }) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  return (
+    <View style={appStyles2.dropdownContainer}>
+      <TouchableOpacity
+        style={appStyles2.dropdown}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={appStyles2.dropdownText}>
+          {selectedValue || `Select ${label}`}
+        </Text>
+      </TouchableOpacity>
+
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={appStyles2.modalContainer}>
+          <View style={appStyles2.modalContent}>
+            <Text style={appStyles2.modalTitle}>{label}</Text>
+            <FlatList
+              data={options}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={appStyles2.modalOption}
+                  onPress={() => {
+                    onValueChange(item);
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={appStyles2.modalOptionText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+};
 
 export default function MenuScreen() {
-  // State to hold selected values for dropdowns
   const [performance, setPerformance] = useState('default');
   const [cpu, setCpu] = useState('');
   const [gpu, setGpu] = useState('');
@@ -13,7 +58,8 @@ export default function MenuScreen() {
   const [storage, setStorage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Price mapping for components
+
+
   const prices = {
     cpu: {
       // Low
@@ -128,7 +174,6 @@ export default function MenuScreen() {
     }
   };
 
-  // Options for CPUs, GPUs, and other components based on performance tier
   const performanceOptions = {
     low: {
       cpu: [
@@ -186,8 +231,21 @@ export default function MenuScreen() {
       ],
     }
   };
+  const ramOptions = ['8GB', '16GB', '32GB'];
 
-  // Calculate total price
+  const motherboardOptions = [
+    'ASUS ROG Strix B550-F Gaming', 
+    'MSI MAG Z690 TOMAHAWK WIFI', 
+    'Gigabyte AORUS X570 Elite',
+    'ASRock Z690 Taichi',
+    'EVGA Z590 FTW WIFI',
+];
+
+  const powerSupplyOptions = ['500W', '750W', '1000W'];
+  
+  const storageOptions = ['500GB', '1TB', '2TB'];
+
+/*
   const calculateTotalPrice = () => {
     let total = 0;
 
@@ -213,116 +271,80 @@ export default function MenuScreen() {
     setTotalPrice(total);
   };
 
-  // Set CPU and GPU options based on performance
-  const performanceTier = performance !== 'default' ? performanceOptions[performance] : {};
+*/
+
+  const calculateTotalPrice = () => {
+    let total = 0;
+    total += prices.cpu[cpu] || 0;
+    total += prices.gpu[gpu] || 0;
+    total += prices.ram[ram] || 0;
+    total += prices.motherboard[motherboard] || 0;  
+    total += prices.powerSupply[powerSupply] || 0;
+    total += prices.storage[storage] || 0;
+    setTotalPrice(total);
+  };
+  const availableCPUs = performanceOptions[performance]?.cpu || [];
+  const availableGPUs = performanceOptions[performance]?.gpu || [];
 
   return (
     <View style={appStyles2.container}>
       <Text style={appStyles2.title}>Choose Your Components</Text>
-      
-      {/* Performance Tier Dropdown */}
-      <Picker
-        style={appStyles2.dropdown}
-        selectedValue={performance}
+      <CustomPicker
+        label="Performance Tier"
+        options={['low', 'mid', 'high']}
+        selectedValue={performance !== 'default' ? performance : ''}
         onValueChange={setPerformance}
-      >
-        <Picker.Item label="Select Performance Tier" value="default" />
-        <Picker.Item label="Low" value="low" />
-        <Picker.Item label="Mid" value="mid" />
-        <Picker.Item label="High" value="high" />
-      </Picker>
-
-      {/* CPU Dropdown based on Performance */}
+      />
       {performance !== 'default' && (
-        <Picker
-          style={appStyles2.dropdown}
-          selectedValue={cpu}
-          onValueChange={setCpu}
-        >
-          <Picker.Item label="Select CPU" value="default" />
-          {performanceTier.cpu.map((cpuOption, index) => (
-            <Picker.Item key={index} label={cpuOption} value={cpuOption} />
-          ))}
-        </Picker>
+        <>
+          <CustomPicker
+            label="CPU"
+            options={availableCPUs}
+            selectedValue={cpu}
+            onValueChange={setCpu}
+          />
+          <CustomPicker
+            label="GPU"
+            options={availableGPUs}
+            selectedValue={gpu}
+            onValueChange={setGpu}
+          />
+        </>
       )}
-
-      {/* GPU Dropdown based on Performance */}
-      {performance !== 'default' && (
-        <Picker
-          style={appStyles2.dropdown}
-          selectedValue={gpu}
-          onValueChange={setGpu}
-        >
-          <Picker.Item label="Select GPU" value="default" />
-          {performanceTier.gpu.map((gpuOption, index) => (
-            <Picker.Item key={index} label={gpuOption} value={gpuOption} />
-          ))}
-        </Picker>
-      )}
-
-      {/* RAM Dropdown */}
-      <Picker
-        style={appStyles2.dropdown}
+      <CustomPicker
+        label="RAM"
+        options={ramOptions}
         selectedValue={ram}
         onValueChange={setRam}
-      >
-        <Picker.Item label="Select RAM" value="default" />
-        <Picker.Item label="8GB" value="8GB" />
-        <Picker.Item label="16GB" value="16GB" />
-        <Picker.Item label="32GB" value="32GB" />
-      </Picker>
+      />
 
-      {/* Motherboard Dropdown */}
-      <Picker
-        style={appStyles2.dropdown}
+      <CustomPicker
+        label="Motherboard"
+        options={motherboardOptions}
         selectedValue={motherboard}
         onValueChange={setMotherboard}
-      >
-        <Picker.Item label="Select Motherboard" value="default" />
-        <Picker.Item label="ASUS ROG Strix B550-F Gaming" value="ASUS ROG Strix B550-F Gaming" />
-        <Picker.Item label="MSI MAG Z690 TOMAHAWK WIFI" value="MSI MAG Z690 TOMAHAWK WIFI" />
-        <Picker.Item label="Gigabyte AORUS X570 Elite" value="Gigabyte AORUS X570 Elite" />
-        <Picker.Item label="ASRock Z690 Taichi" value="ASRock Z690 Taichi" />
-        <Picker.Item label="EVGA Z590 FTW WIFI" value="EVGA Z590 FTW WIFI" />
-      </Picker>
-
-      {/* Power Supply Dropdown */}
-      <Picker
-        style={appStyles2.dropdown}
+      />
+      <CustomPicker
+        label="PowerSupply"
+        options={powerSupplyOptions}
         selectedValue={powerSupply}
         onValueChange={setPowerSupply}
-      >
-        <Picker.Item label="Select Power Supply" value="default" />
-        <Picker.Item label="500W" value="500W" />
-        <Picker.Item label="750W" value="750W" />
-        <Picker.Item label="1000W" value="1000W" />
-      </Picker>
-
-      {/* Storage Dropdown */}
-      <Picker
-        style={appStyles2.dropdown}
+      />
+      <CustomPicker
+        label="Storage"
+        options={storageOptions}
         selectedValue={storage}
         onValueChange={setStorage}
-      >
-        <Picker.Item label="Select Storage" value="default" />
-        <Picker.Item label="500GB" value="500GB" />
-        <Picker.Item label="1TB" value="1TB" />
-        <Picker.Item label="2TB" value="2TB" />
-      </Picker>
+      />
 
-      {/* Calculate Total Price Button */}
-      
-      {/* Insert New Code Here */}
+
       <TouchableOpacity style={appStyles2.button} onPress={calculateTotalPrice}>
         <Text style={appStyles2.buttonText}>Calculate Total Price</Text>
       </TouchableOpacity>
 
-      {/* Display Total Price */}
       {totalPrice > 0 && (
         <Text style={appStyles2.priceText}>Total Price: ${totalPrice}</Text>
-      
       )}
-      
     </View>
   );
 }
