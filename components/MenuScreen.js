@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Picker, Button, } from 'react-native';
-import appStyles2 from '../assets/appStyles2'; // Correct import name to lowercase "a" in appStyles2
+import { View, Text, Picker, Button, TouchableOpacity, } from 'react-native';
+import appStyles2 from '../assets/appStyles2'; 
 
 export default function MenuScreen() {
   // State to hold selected values for dropdowns
@@ -311,11 +311,11 @@ export default function MenuScreen() {
       </Picker>
 
       {/* Calculate Total Price Button */}
-      <Button
-        style={appStyles2.button}
-        title="Calculate Total Price"
-        onPress={calculateTotalPrice}
-      />
+      
+      {/* Insert New Code Here */}
+      <TouchableOpacity style={appStyles2.button} onPress={calculateTotalPrice}>
+        <Text style={appStyles2.buttonText}>Calculate Total Price</Text>
+      </TouchableOpacity>
 
       {/* Display Total Price */}
       {totalPrice > 0 && (
