@@ -343,7 +343,7 @@ export default function MenuScreen() {
       </TouchableOpacity>
 
       {totalPrice > 0 && (
-        <Text style={appStyles2.priceText}>Total Price: ${totalPrice}</Text>
+        <Text style={appStyles2.priceText}>Total Price: €{totalPrice}</Text>
       )}
     </View>
   );

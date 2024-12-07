@@ -1,4 +1,6 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions  } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width; // Get screen width
 
 export default StyleSheet.create({
   container: { 
@@ -19,7 +21,7 @@ export default StyleSheet.create({
   minWidth: Platform.OS === 'web' ? 300 : '80%', // Set a fixed width for web users
   maxWidth: Platform.OS === 'web' ? 300 : '90%', // Ensure consistent width for web
   height: 50,
-  marginBottom: 10, 
+  marginBottom: 10,
   borderWidth: 1,
   borderColor: '#ccc',
   borderRadius: 8,
@@ -42,7 +44,12 @@ export default StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -10,
+    marginTop: -10, 
+    width: Platform.select({
+      web: '50%', // Use percentage for web
+      default: screenWidth * 0.5, // Use screen width for mobile
+    }),
+    maxWidth: Platform.OS === 'web' ? 300 : undefined, // Optional: Limit web button width
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
