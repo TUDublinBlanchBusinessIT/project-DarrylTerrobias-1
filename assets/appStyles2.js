@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native'; 
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
   container: { 
@@ -16,16 +16,18 @@ export default StyleSheet.create({
     color: '#333',
   },
   dropdown: { 
-    width: '90%',
-    height: 50,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingLeft: 12,
-    fontSize: 16,
-    backgroundColor: '#f8f8f8',
-    color: '#000',
+  minWidth: Platform.OS === 'web' ? 300 : '80%', // Set a fixed width for web users
+  maxWidth: Platform.OS === 'web' ? 300 : '90%', // Ensure consistent width for web
+  height: 50,
+  marginBottom: 10, 
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 8,
+  paddingLeft: 12,
+  fontSize: 16,
+  backgroundColor: '#f8f8f8',
+  color: '#000',
+  justifyContent: 'center', 
   },
   dropdownContainer: { 
     marginBottom: 15,
@@ -40,7 +42,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: -10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -76,7 +78,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   modalOption: { 
-    padding: 15,
+    padding: 12, 
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
