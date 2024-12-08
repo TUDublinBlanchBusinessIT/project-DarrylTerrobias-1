@@ -21,7 +21,7 @@ export default StyleSheet.create({
   minWidth: Platform.OS === 'web' ? 300 : '80%', // Set a fixed width for web users
   maxWidth: Platform.OS === 'web' ? 300 : '90%', // Ensure consistent width for web
   height: 50,
-  marginBottom: 10,
+  marginBottom: 5,
   borderWidth: 1,
   borderColor: '#ccc',
   borderRadius: 8,
@@ -40,7 +40,7 @@ export default StyleSheet.create({
   },
   button: { 
     height: 55,
-    backgroundColor: '#2d2d86',
+    backgroundColor: '#884dff',
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -56,7 +56,7 @@ export default StyleSheet.create({
     shadowRadius: 5,
   },
   buttonText: { 
-    color: '#fff',
+    color: '#e6e6e6',
     fontSize: 18,
     fontWeight: '700',
   },
@@ -92,24 +92,23 @@ export default StyleSheet.create({
   modalOptionText: { 
     fontSize: 18,
   },
+
   topBar: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end', // Aligns the button to the right
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#FFFFFF', // Optional: add a background color
+    backgroundColor: '#FFFFFF', 
   },
-
   backButton: {
-    backgroundColor: '#2d2d86',
+    backgroundColor: '#884dff',
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 8,
   },
-
   backButtonText: {
-    color: '#FFFFFF',
+    color: '#e6e6e6',
     fontSize: 16,
     fontWeight: 'bold',
   },

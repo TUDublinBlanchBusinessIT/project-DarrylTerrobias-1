@@ -6,12 +6,13 @@ const appStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#111109',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
+    color: '#fff',
   },
   input: {
     width: '100%',
@@ -22,27 +23,31 @@ const appStyles = StyleSheet.create({
     marginBottom: 16,
     borderWidth: 1,
     borderColor: '#ddd',
+    fontWeight: 'bold', 
   },
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#884dff',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
   link: {
-    marginTop: 16,
+    marginTop: 20,
   },
   linkText: {
-    color: '#007BFF',
+    color: '#bb99ff',
     fontSize: 14,
+    borderColor: '#ddd',
+    fontWeight: 'bold', 
+    textDecorationLine: 'underline', 
   },
 });
 
