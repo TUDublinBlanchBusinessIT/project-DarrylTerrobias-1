@@ -294,6 +294,17 @@ export default function MenuScreen() {
 
   return (
     <View style={appStyles2.container}>
+
+      {/* sign out code */}
+      <View style={appStyles2.topBar}>
+        <TouchableOpacity
+          style={appStyles2.backButton}
+          onPress={() => navigation.navigate('Login')} // Navigate to LoginScreen
+        >
+          <Text style={appStyles2.backButtonText}>Sign Out</Text>
+        </TouchableOpacity> 
+      </View>
+      
       <Text style={appStyles2.title}>Choose Your Components</Text>
       <CustomPicker
         label="Performance Tier"

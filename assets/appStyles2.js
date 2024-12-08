@@ -92,4 +92,25 @@ export default StyleSheet.create({
   modalOptionText: { 
     fontSize: 18,
   },
+  topBar: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end', // Aligns the button to the right
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#FFFFFF', // Optional: add a background color
+  },
+
+  backButton: {
+    backgroundColor: '#2d2d86',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+
+  backButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
