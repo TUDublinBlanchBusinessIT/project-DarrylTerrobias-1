@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Image  } from 'react-native';
 import appStyles from '../assets/appStyles';
-import { firebase } from '../firebaseConfig'; // Import Firebase
+import { firebase } from '../firebaseConfig'; 
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -19,6 +19,14 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={appStyles.container}>
+    
+      {/* Logo */}
+      <Image 
+        source={require('../assets/Logo.png')} 
+        style={appStyles.logo}
+        resizeMode="contain"
+      />
+
       <Text style={appStyles.title}>Login</Text>
       <TextInput
         style={appStyles.input}

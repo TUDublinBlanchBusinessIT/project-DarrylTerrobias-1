@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,} from 'react-native';
 
 const appStyles = StyleSheet.create({
   container: {
@@ -7,6 +7,13 @@ const appStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     backgroundColor: '#111109',
+  },
+
+  logo: {
+    width: 200, 
+    height: 250,
+    marginBottom: -20,
+    marginTop: -400,
   },
   title: {
     fontSize: 24,
@@ -24,6 +31,7 @@ const appStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     fontWeight: 'bold', 
+    color: '#000000',
   },
   button: {
     width: '100%',
